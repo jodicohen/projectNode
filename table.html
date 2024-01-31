@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+            direction: rtl;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        th,
+        td {
+            border: 2px solid rgb(215, 51, 114);
+            padding: 8px;
+        }
+
+        th {
+            background-color: antiquepink;
+            color: black;
+
+        }
+
+        tr {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Rest api</h1>
+    <h4>השרת שלי מכיל את ה- resources הבאים</h4>
+    <h4>כתובת השרת http://localhost:3500</h4>
+    <h4>order resourse</h4>
+    <table>
+        <tr>
+            <th>שיטה</th>
+            <th>כתובת</th>
+            <th>פרמטרים</th>
+            <th>body</th>
+            <th>מה מחזיר</th>
+            <th>פרמטרים אופציונליים</th>
+            <th>פעולת CRUD</th>
+            <th>מקרים קיצוניים - מה השרת מחזיר</th>
+            <th>תיאור</th>
+            <th>Headers</th>
+        </tr>
+        <tr>
+            <td>Post</td>
+            <td>/api/order</td>
+            <td>-</td>
+            <td>{ orderDate, getOrderDate, orderAddress, product }</td>
+            <td>{ orderDate, getOrderDate, orderAddress, products, userId: req.user._id }</td>
+            <td>-</td>
+            <td>create</td>
+            <td>אם הנתונים אינם נכונים מחזיר קוד 400</td>
+            <td>יצירת הזמנה חדשה</td>
+            <td>x-access-token</td>
+        </tr>
+        <tr>
+            <td>Delete</td>
+            <td>/api/order/{id}</td>
+            <td>{id} קוד הזמנה</td>
+            <td>-</td>
+            <td> {orderDate, getOrderDate, orderAddress}</td>
+            <td>-</td>
+            <td>Delete</td>
+            <td>אם לא קיימת כזאת הזמנה מחזיר קוד 404</td>
+            <td>מחיקת הזמנה</td>
+            <td>x-access-token</td>
+        </tr>
+        <tr>
+            <td>put</td>
+            <td>/api/order/{id}</td>
+            <td>{id} קוד הזמנה</td>
+            <td>-</td>
+            <td> { didOrderGoOutAlredy: true }</td>
+            <td>-</td>
+            <td>update</td>
+            <td>אם לא קיימת כזאת הזמנה מחזיר קוד 404</td>
+            <td>מעדכן סטטוס הזמנה</td>
+            <td>x-access-token</td>
+        </tr>
+        <tr>
+            <td>get</td>
+            <td>/api/order</td>
+            <td>-</td>
+            <td>-</td>
+            <td> {orderDate, getOrderDate, orderAddress}</td>
+            <td>-</td>
+            <td>reade</td>
+            <td>-</td>
+            <td>שליפת כל ההזמנות שהמשתמש ביצע</td>
+            <td>x-access-token</td>
+        </tr>
+    </table>
+
+    <h4>user resourse</h4>
+    <table>
+       
+        <tr>
+            <th>שיטה</th>
+            <th>כתובת</th>
+            <th>פרמטרים</th>
+            <th>body</th>
+            <th>מה מחזיר</th>
+            <th>פרמטרים אופציונליים</th>
+            <th>פעולת CRUD</th>
+            <th>מקרים קיצוניים - מה השרת מחזיר</th>
+            <th>תיאור</th>
+            <th>Headers</th>
+        </tr>
+        <tr>
+            <td>get</td>
+            <td>/api/user</td>
+            <td>-</td>
+            <td>-</td>
+            <td>  מחזיר פרטי משתמש ללא סיסמא</td>
+            <td>-</td>
+            <td>reade</td>
+            <td>-</td>
+            <td> שליפת כל המשתמשים</td>
+            <td>x-access-token</td>
+        </tr>
+        <tr>
+            <td>post</td>
+            <td>/api/user</td>
+            <td>-</td>
+            <td>{ email, password, userName,role }</td>
+            <td>{ email, password: hashedPassword, userName,role:role}</td>
+            <td>-</td>
+            <td>create</td>
+            <td>אם הנתונים אינם נכונים מחזיר קוד 400</td>
+            <td>יצירת משתמש חדשה</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>post</td>
+            <td>/api/user/login</td>
+            <td>-</td>
+            <td>{ email, password }</td>
+            <td> { _id: user.id, userName: user.userName, token, email: user.email }</td>
+            <td>-</td>
+            <td>login</td>
+            <td>אם לא קיים כזה משתמש מחזיר קוד 404</td>
+            <td>מחיקת הזמנה</td>
+            <td>-</td>
+        </tr>
+        
+
+    </table>
+
+    
+    <h4>product resourse</h4>
+    <table>
+       
+        <tr>
+            <th>שיטה</th>
+            <th>כתובת</th>
+            <th>פרמטרים</th>
+            <th>body</th>
+            <th>מה מחזיר</th>
+            <th>פרמטרים אופציונליים</th>
+            <th>פעולת CRUD</th>
+            <th>מקרים קיצוניים - מה השרת מחזיר</th>
+            <th>תיאור</th>
+            <th>Headers</th>
+        </tr>
+        <tr>
+            <td>get</td>
+            <td>/api/product</td>
+            <td>-</td>
+            <td>-</td>
+            <td>מחזיר את רשימת כל המוצרים</td>
+            <td>-</td>
+            <td>reade</td>
+            <td>-</td>
+            <td> שליפת כל המוצרים</td>
+            <td>x-access-token</td>
+        </tr>
+        <tr>
+            <td>get</td>
+            <td>/api/product/{id}</td>
+            <td>{id}</td>
+            <td>-</td>
+            <td>מחזיר פרטי מוצר לפי ה- id שנשלח</td>
+            <td>-</td>
+            <td>reade</td>
+            <td>אם ה- id אינו נכון מחזיר קוד 400</td>
+            <td>שליפת מוצר לפי id</td>
+            <td>x-access-token</td>
+        </tr>
+        <tr>
+            <td>delete</td>
+            <td>/api/product/{id}</td>
+            <td>{id}</td>
+            <td>-</td>
+            <td> פרטי המוצר המחוק</td>
+            <td>-</td>
+            <td>delete</td>
+            <td>אם ה- id אינו נכון מחזיר קוד 404</td>
+            <td>מחיקת מוצר</td>
+            <td>x-access-token</td>
+        </tr>
+        <tr>
+            <td>post</td>
+            <td>/api/product/</td>
+            <td>-</td>
+            <td>{ productName, description, ManufacturingDate, imageName, imagePath }</td>
+            <td> { productName, description, ManufacturingDate, imageName, imagePath }</td>
+            <td>-</td>
+            <td>create</td>
+            <td>-</td>
+            <td>הוספת מוצר</td>
+            <td>x-access-token</td>
+        </tr>
+        <tr>
+            <td>put</td>
+            <td>/api/product/{id}</td>
+            <td>{id}</td>
+            <td>-</td>
+            <td> מחזיר מוצר מעודכן</td>
+            <td>-</td>
+            <td>update</td>
+            <td>אם לא קיים כזה מוצר מחזיר קוד 404</td>
+            <td>עדכון מוצר</td>
+            <td>x-access-token</td>
+        </tr>
+
+    </table>
+</body>
+
+</html>
