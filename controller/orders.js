@@ -7,12 +7,8 @@ export const getAllOrders = async (req, res, next) => {
     let perPage = req.query.perPage || 30;
 
     try {
-
-        let allOrders = await orderModel.find({})
-        // if (!allOrders)
-        //     return res.status(404).json({ type: "no order", message: "No such order exists" })
-        // if (allOrders.userId != req.user._id)
-        //     return res.status(403).json({ type: "Not authorized", massage: "Permission is required to perform the operation" })
+  
+        let allOrders = await orderModel.find({userId:req.user._id} )
         return res.json(allOrders)
 
     }
