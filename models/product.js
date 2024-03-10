@@ -2,13 +2,14 @@ import mongoose, { isValidObjectId } from "mongoose";
 import Joi from "joi";
 
 
+
 const productSchema = mongoose.Schema({
     productName: String,
-    description: String,
     ManufacturingDate: { type: Date, default: Date.now() },
-    imageName: String,
-    imagePath: String,
-
+    src:String,
+    price:{ type: Number, min: -2147483648, max: 2147483647 },
+    Description:String,
+    amount:{ type: Number, min: -2147483648, max: 2147483647 }
 })
 
 export const productModels = mongoose.model("products", productSchema);
@@ -16,11 +17,13 @@ export const productModels = mongoose.model("products", productSchema);
 export const productValidator = (_product) => {
     const productValidationSchema = Joi.object({
         
-        productName: Joi.string().min(3).max(10).required(),
-        description: Joi.string().min(0).max(10000).required(),
+        productName: Joi.string().min(3).max(100).required(),
         ManufacturingDate: Joi.date(),
-        imageName: Joi.string(),
-        imagePath: Joi.string()
+        src:Joi.string(),
+        price:Joi.number(),
+        Description:Joi.string(),
+        amount:Joi.number()
+
 
     })
     return productValidationSchema.validate(_product);

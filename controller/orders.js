@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 import { orderModel,orderValidator } from "../models/orders.js"
 
+
 export const getAllOrders = async (req, res, next) => {
-    let txt = req.query.txt || undefined;
-    let page = req.query.page || 1;
-    let perPage = req.query.perPage || 30;
+
 
     try {
   
@@ -42,14 +41,14 @@ export const deleteOrder = async (req, res) => {
 }
 
 export const addOrder = async (req, res) => {
-    let { orderDate, getOrderDate, orderAdress, products } = req.body;
+    let {products,orderDate,getOrderDate,userDetails} = req.body;
     const result = await orderValidator(req.body);
     console.log(result)
     if (result.error)
         return res.status(400).json({ type: " invalid data", message: result.error.details[0].message })
 
     try {
-        let newOrder = new orderModel({ orderDate, getOrderDate, orderAdress, products, userId: req.user._id });
+        let newOrder = new orderModel({ orderDate, getOrderDate, products, userId:req.user._id,userDetails});
         await newOrder.save();
         return res.json(newOrder)
     }
